@@ -7,16 +7,29 @@ Servo Y_axis_2;
 int currentY = 0;  // used for startup
 int currentX = 90;  
 int Min_y_cam_fov = 0;  // this is the same fov camera llimits set in python code
-int Max_y_cam_fov = 180;
+int Max_y_cam_fov = 180; 
+
+const int trigPin = 9; 
+const int echoPin = 10; 
 
 unsigned long LastSignalTime = 0 ;  //delay to prevcent lag within the arduino
 const unsigned DebounceDelay = 300;
+
+
+
 
 void attachAllServos() {
   X_axis.attach(4);
   Y_axis_1.attach(2);
   Y_axis_2.attach(3);    // def to set up pins on connection
  
+}
+
+void set_distnace_sensor(){
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+
 }
 
 void intialStartPosition(){ // def to write servo to start config
@@ -50,15 +63,37 @@ void Y_axis_movement(int angley){
   currentY = angley;
 }
 
+int getDistacne(){
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+
+long duration = pulseIn(echoPin, HIGH);
+
+int dist = duration/58;
+return dist;
+
+
+}
+
 
 
 void setup() {
   Serial.begin(9600);
   attachAllServos();
   intialStartPosition();
+  set_distnace_sensor();
 }
 
 void loop() {
+
+
+  int dist = getDistacne();
+  Serial.print(dist );
+  Serial.println("cm");
+
   if (Serial.available() > 0) {
     String data = Serial.readStringUntil('\n');
     int commaIndex = data.indexOf(',');

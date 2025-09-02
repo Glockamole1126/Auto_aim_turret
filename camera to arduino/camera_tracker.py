@@ -122,9 +122,9 @@ while True:
         servo_y_angle = max(CAMERA_MIN_Y_ANGLE, min(CAMERA_MAX_Y_ANGLE, servo_y_angle))      
         if servo_x_angle != last_servo_x_angle or servo_y_angle != last_servo_y_angle:
             try:
-                print("Per Parlax" , servo_y_angle, servo_x_angle)  #debugging 
+               # print("Per Parlax" , servo_y_angle, servo_x_angle)  #debugging 
                 servo_x_angle, servo_y_angle = correct_parallax(servo_x_angle, servo_y_angle)  # correct the angle based on paralax
-                print("Paralax" , servo_y_angle, servo_x_angle)  # debugging
+               # print("Paralax" , servo_y_angle, servo_x_angle)  # debugging
                 arduino.write(f"{servo_x_angle},{servo_y_angle}\n".encode()) # send signal ro arduino 
                 arduino.flush()                                                 # clean/clear the feed for arduino to prevent clogging the signal
                 last_servo_x_angle = servo_x_angle
