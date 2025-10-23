@@ -90,12 +90,12 @@ void setup() {
 void loop() {
 
 
-  int dist = getDistacne(); //find distncae from the snesor to the target
-  Serial.print(dist );
-  Serial.println("cm");
+ 
 
-  if (Serial.available() > 0) return;
-
+  if (Serial.available() > 0) return;\
+    int dist = getDistacne(); //find distncae from the snesor to the target
+    Serial.print(dist );
+    Serial.println("cm");
     String data = Serial.readStringUntil('\n');
     int commaIndex = data.indexOf(',');
     Serial.println("Received: " + data);
