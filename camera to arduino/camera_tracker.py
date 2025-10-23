@@ -84,9 +84,9 @@ if not cap.isOpened():
 
 
 print("Connecting to Arduino...")
-arduino = serial.Serial('COM7', 9600)
+arduino = serial.Serial('COM8', 9600)
 time.sleep(2)
-print("Connected!")  #connect to arduino running at 9600 baud in port 7
+print("Connected!")  #connect to arduino running at 9600 baud in port given
 
 
 while True:
@@ -125,8 +125,8 @@ while True:
                # print("Per Parlax" , servo_y_angle, servo_x_angle)  #debugging 
                 servo_x_angle, servo_y_angle = correct_parallax(servo_x_angle, servo_y_angle)  # correct the angle based on paralax
                # print("Paralax" , servo_y_angle, servo_x_angle)  # debugging
-                arduino.write(f"{servo_x_angle},{servo_y_angle}\n".encode()) # send signal ro arduino 
                 arduino.flush()                                                 # clean/clear the feed for arduino to prevent clogging the signal
+                arduino.write(f"{servo_x_angle},{servo_y_angle}\n".encode()) # send signal ro arduino 
                 last_servo_x_angle = servo_x_angle
                 last_servo_y_angle = servo_y_angle
                 time.sleep(0.1)  # Slight delay to prevent spamming of signals

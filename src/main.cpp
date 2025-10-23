@@ -90,27 +90,33 @@ void setup() {
 void loop() {
 
 
-  int dist = getDistacne();
+  int dist = getDistacne(); //find distncae from the snesor to the target
   Serial.print(dist );
   Serial.println("cm");
 
-  if (Serial.available() > 0) {
+  if (Serial.available() > 0) return;
+
     String data = Serial.readStringUntil('\n');
     int commaIndex = data.indexOf(',');
     Serial.println("Received: " + data);
 
-    if (commaIndex > 0) {
-      int servo_x_angle = data.substring(0, commaIndex).toInt();
-      int servo_y_angle = data.substring(commaIndex + 1).toInt();
+    if (dist > 15 && commaIndex > 0) {
+        int servo_x_angle = data.substring(0, commaIndex).toInt();
+        int servo_y_angle = data.substring(commaIndex + 1).toInt();
 
-      if (servo_x_angle >= 0 && servo_x_angle <= 180 &&
-          servo_y_angle >= 0 && servo_y_angle <= 180) {
+        if (servo_x_angle >= 0 && servo_x_angle <= 180 &&
+            servo_y_angle >= 0 && servo_y_angle <= 180) {
 
-       
+        
 
-        X_axis_movement(servo_x_angle);
-        Y_axis_movement(servo_y_angle);
-      }
+          X_axis_movement(servo_x_angle);
+          Y_axis_movement(servo_y_angle);
+        }
+    }
+    else {
+      Serial.println("Object error");
+      intialStartPosition();
+
     }
   }
-}
+
